@@ -18,3 +18,7 @@ a {
   color: inherit;
   cursor: pointer;
 }
+
+.dark {
+  @apply bg-slate-800 text-white border-gray-700;
+}
