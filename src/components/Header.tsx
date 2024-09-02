@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { MdDarkMode } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosSearch, IoMdSunny } from "react-icons/io";
 
 interface HeaderProps {
   dark: boolean;
@@ -29,10 +29,15 @@ export default function Header({ dark, darkSetButton }: HeaderProps) {
             }`}
             placeholder="search"
           />
-          <MdDarkMode
+          <div
             onClick={darkSetButton}
-            className="h-9 w-9 lg:w-9 lg:h-9 text-yellow-400"
-          />
+            className="flex items-center justify-center">
+            {dark ? (
+              <IoMdSunny className="darkMode__icon" />
+            ) : (
+              <MdDarkMode className="darkMode__icon" />
+            )}
+          </div>
         </div>
         <div className="flex items-center justify-end lg:flex-1 px-8">
           <button
