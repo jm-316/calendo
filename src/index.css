@@ -18,3 +18,11 @@ a {
   color: inherit;
   cursor: pointer;
 }
+
+.dark {
+  @apply bg-slate-800 text-white border-gray-700;
+}
+
+.darkMode__icon {
+  @apply h-9 w-9 text-yellow-400;
+}
