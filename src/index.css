@@ -20,9 +20,25 @@ a {
 }
 
 .dark {
-  @apply bg-slate-800 text-white border-gray-700;
+  @apply bg-slate-800 text-zinc-400 border-gray-700;
 }
 
 .darkMode__icon {
   @apply h-9 w-9 text-yellow-400;
+}
+
+.nav__list {
+  @apply flex items-center gap-3 font-semibold text-black p-3;
+}
+
+.select {
+  @apply bg-indigo-300 rounded-lg text-white;
+}
+
+.dark .nav__list {
+  @apply text-zinc-400;
+}
+
+.dark .select {
+  @apply bg-indigo-700 text-zinc-200;
 }

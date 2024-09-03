@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
+import Sidebar from "./components/SideBar";
 
 function App() {
   const [dark, setDark] = useState(() => {
@@ -25,10 +26,13 @@ function App() {
     setDark((prevState) => !prevState);
   };
   return (
-    <>
-      <Header dark={dark} darkSetButton={darkSetButton} />
-      <Outlet />
-    </>
+    <div className="flex p-0">
+      <Sidebar />
+      <div className="w-full">
+        <Header dark={dark} darkSetButton={darkSetButton} />
+        <Outlet />
+      </div>
+    </div>
   );
 }
 
