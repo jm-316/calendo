@@ -21,13 +21,13 @@ const router = createBrowserRouter([
         path: "todos",
         element: <Todos />,
       },
-    ],
-  },
-  {
-    path: "calendars",
-    children: [
-      { path: "/calendars", element: <Calendars /> },
-      { path: "/calendars/new", element: <CalendarNewPage /> },
+      {
+        path: "calendars",
+        children: [
+          { path: "/calendars", element: <Calendars /> },
+          { path: "/calendars/new", element: <CalendarNewPage /> },
+        ],
+      },
     ],
   },
   { path: "/login", element: <Login /> },
