@@ -18,7 +18,10 @@ export default function Sidebar() {
       <div className="flex pl-3 pr-3">
         <section className="flex flex-col w-14 lg:w-52">
           <div className="invisible mt-4 mb-20 mr-44 p-4 lg:ml-10 lg:visible">
-            <Link to="/" className="-m-1.5 p-1.5">
+            <Link
+              to="/"
+              className="-m-1.5 p-1.5"
+              onClick={() => handleSelect("Dashboard")}>
               <span className="text-sm italic font-bold text-purple-500 lg:text-xl">
                 CalenDo
               </span>
