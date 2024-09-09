@@ -1,11 +1,12 @@
 import { TodoType } from "../hook/useTodos";
 import { supabase } from "../utils/SupabaseClient";
 
-export const getTodos = async (): Promise<TodoType[]> => {
+export const getTodos = async (userId: string): Promise<TodoType[]> => {
   try {
     const { data, error } = await supabase
       .from("todos")
       .select("*")
+      .eq("userId", userId)
       .order("id", { ascending: false });
 
     if (error) {
@@ -23,9 +24,11 @@ export const getTodos = async (): Promise<TodoType[]> => {
 export const addTodo = async ({
   content,
   completed,
+  userId,
 }: {
   content: string;
   completed: boolean;
+  userId: string;
 }): Promise<TodoType[]> => {
   try {
     const { data, error } = await supabase
@@ -35,6 +38,7 @@ export const addTodo = async ({
           content,
           completed,
           date: new Date(),
+          userId,
         },
       ])
       .select();
