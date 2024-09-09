@@ -2,16 +2,24 @@ import { IoMdCheckboxOutline } from "react-icons/io";
 import React, { useState } from "react";
 import TodoList from "./TodoList";
 import { useTodos } from "../../hook/useTodos";
+import { useUser } from "../../hook/useUser";
 
 export default function Todos() {
   const [todo, setTodo] = useState<string>("");
   const [isShow, setIsShow] = useState<boolean>(false);
+  const { user } = useUser();
 
-  const { newTodo } = useTodos();
+  const { todos, newTodo } = useTodos();
+
+  if (!user) return;
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && todo.trim()) {
-      const addNewTodo = { content: todo, completed: false };
+      const addNewTodo = {
+        content: todo,
+        completed: false,
+        userId: user && user?.id,
+      };
       newTodo.mutate(addNewTodo);
       setTodo("");
       setIsShow(false);
@@ -53,7 +61,13 @@ export default function Todos() {
             />
           </div>
         )}
-        <TodoList />
+        {(todos && todos?.length > 0) || isShow ? (
+          <TodoList />
+        ) : (
+          <div className="border-2 text-center p-3 mt-5 rounded-md">
+            There are no tasks. Start by writing your first todo!
+          </div>
+        )}
       </div>
     </div>
   );
