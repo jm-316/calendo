@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router";
 import { MdDarkMode } from "react-icons/md";
 import { IoIosSearch, IoMdSunny } from "react-icons/io";
+import { useUser } from "../hook/useUser.ts";
 
 interface HeaderProps {
   dark: boolean;
@@ -7,6 +9,17 @@ interface HeaderProps {
 }
 
 export default function Header({ dark, darkSetButton }: HeaderProps) {
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (user?.aud === "authenticated") {
+      logout();
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <header className={`bg-white w-11/12 ${dark ? "dark" : ""}`}>
       <nav className="flex items-center justify-between py-4 mx-auto">
@@ -32,13 +45,11 @@ export default function Header({ dark, darkSetButton }: HeaderProps) {
         </div>
         <div className="flex items-center justify-end text-sm">
           <button
+            onClick={handleClick}
             className={`font-semibold leading-6 text-gray-900 ${
               dark ? "dark" : ""
             }`}>
-            Login{" "}
-            <span aria-hidden="true" className="hidden lg:inline-block">
-              &rarr;
-            </span>
+            {user?.aud === "authenticated" ? "Logout" : "Login"}
           </button>
         </div>
       </nav>
