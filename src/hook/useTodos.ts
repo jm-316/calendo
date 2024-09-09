@@ -5,27 +5,39 @@ import {
   getTodos,
   updateTodo,
 } from "../services/apiTodos";
+import { useUser } from "./useUser";
 
 export interface TodoType {
   id: number;
   content: string;
   completed: boolean;
-  date?: Date;
+  date: Date;
+  userId: string;
 }
 
 export function useTodos() {
   const queryClient = useQueryClient();
+  const { user } = useUser();
 
   const todosQuery = useQuery<TodoType[]>({
-    queryKey: ["todos"],
-    queryFn: getTodos,
+    queryKey: ["todos", user?.id],
+    queryFn: () => {
+      return getTodos(user?.id as string);
+    },
+    enabled: !!user?.id,
   });
 
   const newTodo = useMutation({
-    mutationFn: (todo: { content: string; completed: boolean }) =>
-      addTodo(todo),
+    mutationFn: (todo: {
+      content: string;
+      completed: boolean;
+      userId: string;
+    }) => addTodo(todo),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.error("Failed to add todo:", error);
     },
   });
 
