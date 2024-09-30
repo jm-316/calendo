@@ -6,14 +6,7 @@ import {
   updateTodo,
 } from "../services/apiTodos";
 import { useUser } from "./useUser";
-
-export interface TodoType {
-  id: number;
-  content: string;
-  completed: boolean;
-  date: Date;
-  userId: string;
-}
+import { TodoType } from "../interface";
 
 export function useTodos() {
   const queryClient = useQueryClient();

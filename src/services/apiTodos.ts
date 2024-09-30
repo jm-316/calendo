@@ -1,4 +1,4 @@
-import { TodoType } from "../hook/useTodos";
+import { TodoType } from "../interface";
 import { supabase } from "../utils/SupabaseClient";
 
 export const getTodos = async (userId: string): Promise<TodoType[]> => {

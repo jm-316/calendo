@@ -21,7 +21,8 @@ export default function Header({ dark, darkSetButton }: HeaderProps) {
   };
 
   return (
-    <header className={`bg-white w-11/12 ${dark ? "dark" : ""}`}>
+    <header
+      className={`bg-white w-full max-w-screen-2xl ${dark ? "dark" : ""}`}>
       <nav className="flex items-center justify-between py-4 mx-auto">
         <div className="flex items-center gap-x-3 w-7/12 relative lg:flex ">
           <div className="absolute left-2 top-[13px] ">
