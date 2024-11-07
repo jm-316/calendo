@@ -1,5 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -10,7 +11,7 @@ import TodoPage from "./pages/todos/index.tsx";
 import CalendarNewPage from "./pages/calendars/new.tsx";
 import Login from "./pages/login/index.tsx";
 import NotFound from "./pages/notFound/index.tsx";
-import { store } from "./store/store.ts";
+import { persistor, store } from "./store/store.ts";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -41,9 +42,11 @@ const queryClient = new QueryClient();
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </PersistGate>
     </Provider>
   </StrictMode>
 );
