@@ -3,8 +3,7 @@ import { useSelector } from "react-redux";
 import { useCalendars } from "../../hook/useCalendars";
 import { selectCurrentDate } from "../../slices/schedulerSlice";
 import { useCalendarEvents } from "../../hook/useCalendarEvents";
-
-const WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { WEEK } from "../../utils/\bconstants";
 
 export default function DateHeader() {
   const currentDate = useSelector(selectCurrentDate);

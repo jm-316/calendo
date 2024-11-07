@@ -1,12 +1,13 @@
 import { format } from "date-fns";
+import { useNavigate } from "react-router";
 import MultiDayEvent from "./MultiDayEvent";
 import SingleDayEvent from "./SingleDayEvent";
 import { useCalendars } from "../../../hook/useCalendars";
 import { useCalendarEvents } from "../../../hook/useCalendarEvents";
-
-const WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+import { WEEK } from "../../../utils/\bconstants";
 
 export default function MonthView() {
+  const navigate = useNavigate();
   const { calendars } = useCalendars();
   const { createMonth, findSingleDayEvents, findMultiDayEvents } =
     useCalendarEvents(calendars);
@@ -40,6 +41,7 @@ export default function MonthView() {
         return (
           <div
             key={`date${i}`}
+            onClick={() => navigate("/calendars/new")}
             className={`flex flex-col items-start justify-start h-16 border lg:h-32 relative dark:bg-gray-200 dark:border-gray-500 dark:text-black`}>
             <div
               className={`flex flex-col items-center justify-center w-8 h-8 mx-auto py-2 ${
