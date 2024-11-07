@@ -7,9 +7,11 @@ import Scheduler from "../../components/calendars/scheduler/Scheduler";
 import DateHeader from "../../components/calendars/DateHeader";
 import DateNavigation from "../../components/calendars/DateNavigation";
 import MonthView from "../../components/calendars/calendar/MonthView";
+import { useUser } from "../../hook/useUser";
 
 export default function CalendarsPage() {
   const dispatch = useDispatch();
+  const { isLoading } = useUser();
 
   const selectedView = useSelector(
     (state: RootState) => state.scheduler.selectedView
@@ -21,6 +23,10 @@ export default function CalendarsPage() {
     },
     [dispatch]
   );
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="container text-center md:text-left">
