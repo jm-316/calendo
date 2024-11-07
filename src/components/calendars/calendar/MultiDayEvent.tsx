@@ -37,11 +37,11 @@ export default function MultiDayEvent({
             return (
               <div
                 key={eventIndex}
-                className={`absolute text-left w-full`}
+                className={`absolute text-left w-full text-sm`}
                 style={{
                   backgroundColor: event.color,
-                  top: `${eventIndex * 20}px`,
-                  height: "20px",
+                  top: `${eventIndex * 30}px`,
+                  height: "22px",
                 }}>
                 {currentDay.getTime() === startDate.getTime() && event.title}
               </div>
