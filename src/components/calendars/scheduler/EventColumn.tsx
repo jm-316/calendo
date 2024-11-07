@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { useCalendars } from "../../../hook/useCalendars";
 import { selectCurrentDate } from "../../../slices/schedulerSlice";
 import { useCalendarEvents } from "../../../hook/useCalendarEvents";
@@ -7,9 +8,14 @@ import { useCalendarEvents } from "../../../hook/useCalendarEvents";
 export default function EventColumn() {
   const currentDate = useSelector(selectCurrentDate);
   const { calendars } = useCalendars();
+  const navigate = useNavigate();
 
-  const { createMonth, findSingleDayAndHourEvents, findMultiDayEvents } =
-    useCalendarEvents(calendars);
+  const {
+    createMonth,
+    findSingleDayEvents,
+    findSingleDayAndHourEvents,
+    findMultiDayEvents,
+  } = useCalendarEvents(calendars);
 
   return (
     <div className="flex w-full min-w-fit">
@@ -22,9 +28,11 @@ export default function EventColumn() {
           <div className="flex flex-col w-full relative" key={index}>
             {new Array(25).fill(null).map((_, hour) => {
               const events = findSingleDayAndHourEvents(day, hour);
+              const singleDayEvents = findSingleDayEvents(day);
               const multiDayEvents = findMultiDayEvents(day);
               return (
                 <div
+                  onClick={() => navigate("/calendars/new")}
                   className={`flex gap-6 items-center h-14 border-l-2 ${
                     hour === 24 ? "" : "border-b-2"
                   }`}
@@ -60,8 +68,20 @@ export default function EventColumn() {
                           }
                         })
                       : ""}
+                    {hour === 0 && singleDayEvents && singleDayEvents.length > 0
+                      ? singleDayEvents
+                          .filter((event) => !event.startTime)
+                          .map((event) => (
+                            <div
+                              key={event.id}
+                              className="h-full w-full text-center border-b-2"
+                              style={{ backgroundColor: event.color }}>
+                              {event.title}
+                            </div>
+                          ))
+                      : ""}
                     {events && events.length > 0
-                      ? events.map((event, index) => {
+                      ? events.map((event) => {
                           const eventStartDateTime = new Date(
                             `${event.startDate}T${event.startTime}`
                           );
@@ -80,12 +100,12 @@ export default function EventColumn() {
                             if (hour >= eventStartHour && hour < eventEndHour) {
                               const durationInHours =
                                 eventEndHour - eventStartHour;
-                              const topPosition = eventStartHour * 60 - 60;
-                              const height = durationInHours * 60;
+                              const topPosition = eventStartHour * 60 - 20;
+                              const height = durationInHours * 60 - 10;
 
                               return (
                                 <div
-                                  key={index}
+                                  key={event.id}
                                   className={`absolute left-0 right-0 flex items-center justify-center`}
                                   style={{
                                     top: `${topPosition}px`,
@@ -102,7 +122,7 @@ export default function EventColumn() {
                             }
                           }
 
-                          return <div key={index}>&nbsp;</div>;
+                          return <div key={event.id}>&nbsp;</div>;
                         })
                       : ""}
                   </div>
