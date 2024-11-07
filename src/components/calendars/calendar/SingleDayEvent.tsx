@@ -12,23 +12,23 @@ export default function SingleDayEvent({
 }) {
   return (
     <>
-      {events.map((event, eventIndex) => {
+      {events.map((event) => {
         const eventDate = format(new Date(event.startDate), "yyyy-MM-dd");
         const calendarDay = format(day, "yyyy-MM-dd");
         if (calendarDay === eventDate) {
           const singleEventTop =
             multiDayEventsForDay && multiDayEventsForDay.length > 0
-              ? multiDayEventsForDay.length * 20 + 30
+              ? multiDayEventsForDay.length * 20 + 10
               : 0;
 
           return (
             <div
-              key={eventIndex}
-              className="absolute w-full text-left"
+              key={event.id}
+              className="absolute w-full text-left text-sm"
               style={{
                 backgroundColor: event.color,
                 top: `${singleEventTop}px`,
-                height: "20px",
+                height: "22px",
               }}>
               {event.title}
             </div>

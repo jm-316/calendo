@@ -20,5 +20,9 @@ export function useUser() {
     },
   });
 
-  return { user: userQuery.data, logout: userLogout.mutate };
+  return {
+    user: userQuery.data,
+    logout: userLogout.mutate,
+    isLoading: userQuery.isLoading,
+  };
 }

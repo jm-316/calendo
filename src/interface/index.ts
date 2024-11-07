@@ -18,4 +18,12 @@ export interface CalendarType {
   userId: string;
 }
 
+export interface NewCalendarType extends Omit<CalendarType, "id" | "userId"> {}
+
 export type selectOptions = "day" | "Month";
+
+export interface ColorsType {
+  value: string;
+  label: string;
+  colorCode: string;
+}

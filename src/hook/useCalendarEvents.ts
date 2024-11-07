@@ -46,13 +46,20 @@ export function useCalendarEvents(calendars: CalendarType[] | undefined) {
             )
           : null;
 
-        if (!eventStartDate || calendar.endDate) {
-          return false;
-        }
+        const eventEndDate = calendar.endDate
+          ? format(
+              new Date(`${calendar.endDate}T${calendar.endTime || "00:00"}`),
+              "yyyy-MM-dd"
+            )
+          : null;
 
         const calendarDay = format(day, "yyyy-MM-dd");
 
-        return calendarDay === eventStartDate;
+        return (
+          eventStartDate &&
+          calendarDay === eventStartDate &&
+          (!eventEndDate || eventStartDate === eventEndDate)
+        );
       });
     },
     [calendars]
@@ -62,10 +69,10 @@ export function useCalendarEvents(calendars: CalendarType[] | undefined) {
     (day: Date, hour: number) => {
       return calendars?.filter((calendar: CalendarType) => {
         const eventStartDate = new Date(
-          `${calendar.startDate}T${calendar.startTime}`
+          `${calendar.startDate}T${calendar.startTime || "00:00"}`
         );
         const eventEndDate = calendar.endDate
-          ? new Date(`${calendar.endDate}T${calendar.endTime}`)
+          ? new Date(`${calendar.endDate}T${calendar.endTime || "00:00"}`)
           : null;
 
         if (!eventEndDate || eventStartDate.getTime() === day.getTime()) {
@@ -87,24 +94,28 @@ export function useCalendarEvents(calendars: CalendarType[] | undefined) {
     (day: Date) => {
       return calendars?.filter((calendar: CalendarType) => {
         const eventStartDate = new Date(
-          `${calendar.startDate}T${calendar.startTime}`
+          `${calendar.startDate}T${calendar.startTime || "00:00"}`
         );
         const eventEndDate = calendar.endDate
-          ? new Date(`${calendar.endDate}T${calendar.endTime}`)
+          ? new Date(`${calendar.endDate}T${calendar.endTime || "00:00"}`)
           : null;
 
         const eventStartDay = startOfDay(eventStartDate);
 
-        const eventEndDay = eventEndDate ? startOfDay(eventEndDate) : null;
-
-        if (eventEndDay) {
-          day.getTime() === eventStartDay.getTime() ||
-            day.getTime() === eventEndDay.getTime();
-
-          return true;
+        if (
+          eventEndDate &&
+          eventStartDate.toDateString() === eventEndDate.toDateString()
+        ) {
+          return false;
         }
 
-        return false;
+        const eventEndDay = eventEndDate ? startOfDay(eventEndDate) : null;
+
+        return (
+          eventEndDay &&
+          day.getTime() >= eventStartDay.getTime() &&
+          day.getTime() <= eventEndDay.getTime()
+        );
       });
     },
     [calendars]
