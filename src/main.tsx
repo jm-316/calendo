@@ -9,6 +9,7 @@ import Dashboard from "./pages/dashboard/index.tsx";
 import Calendars from "./pages/calendars/index.tsx";
 import TodoPage from "./pages/todos/index.tsx";
 import CalendarNewPage from "./pages/calendars/new.tsx";
+import DetailPage from "./pages/calendars/detail.tsx";
 import Login from "./pages/login/index.tsx";
 import NotFound from "./pages/notFound/index.tsx";
 import { persistor, store } from "./store/store.ts";
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
         children: [
           { path: "/calendars", element: <Calendars /> },
           { path: "/calendars/new", element: <CalendarNewPage /> },
+          { path: "/calendars/:id", element: <DetailPage /> },
         ],
       },
     ],
