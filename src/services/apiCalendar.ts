@@ -20,6 +20,25 @@ export const getCalendars = async (userId: string): Promise<CalendarType[]> => {
   }
 };
 
+export const getCalendar = async (id: number): Promise<CalendarType[]> => {
+  try {
+    const { data: calendar, error } = await supabase
+      .from("calendars")
+      .select("*")
+      .eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Calendar를 찾을 수 없습니다.");
+    }
+
+    return calendar;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
 export const addEvent = async ({
   title,
   startDate,
