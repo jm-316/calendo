@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "./useUser";
 import { CalendarType } from "../interface";
-import { addEvent, getCalendars } from "../services/apiCalendar";
+import { addEvent, getCalendar, getCalendars } from "../services/apiCalendar";
 
-export function useCalendars() {
+export function useCalendars(calendarId?: number) {
   const { user } = useUser();
 
   const queryClient = useQueryClient();
@@ -13,6 +13,14 @@ export function useCalendars() {
     queryFn: () => {
       return getCalendars(user?.id as string);
     },
+  });
+
+  const calendarQuery = useQuery({
+    queryKey: ["calendars", calendarId],
+    queryFn: () => {
+      return getCalendar(calendarId as number);
+    },
+    enabled: !!calendarId,
   });
 
   const newEvent = useMutation({
@@ -34,5 +42,9 @@ export function useCalendars() {
     },
   });
 
-  return { calendars: calendarsQuery.data, newEvent };
+  return {
+    calendars: calendarsQuery.data,
+    calendar: calendarQuery.data,
+    newEvent,
+  };
 }
