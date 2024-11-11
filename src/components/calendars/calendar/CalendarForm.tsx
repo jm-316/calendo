@@ -4,14 +4,20 @@ import { IoTimeOutline } from "react-icons/io5";
 import { MdOutlineColorLens, MdOutlineSubtitles } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import { ColorsType, NewCalendarType } from "../../../interface";
+import { useEffect, useState } from "react";
+import { CalendarType, ColorsType, NewCalendarType } from "../../../interface";
 import { COLORS } from "../../../utils/\bconstants";
 import { RootState } from "../../../store/store";
 import { useUser } from "../../../hook/useUser";
 import { useCalendars } from "../../../hook/useCalendars";
 
-export default function CalendarForm() {
+export default function CalendarForm({
+  isDetail,
+  calendar,
+}: {
+  isDetail: boolean;
+  calendar?: CalendarType[];
+}) {
   const today = startOfToday();
   const { user, isLoading } = useUser();
   const { newEvent } = useCalendars();
@@ -27,6 +33,25 @@ export default function CalendarForm() {
     content: "",
     color: COLORS[0].colorCode,
   });
+
+  useEffect(() => {
+    if (isDetail && calendar) {
+      calendar.map((event) => {
+        setEventData({
+          title: event.title,
+          startDate: event.startDate,
+          startTime: event.startTime || "",
+          endDate: event.endDate || "",
+          endTime: event.endTime || "",
+          content: event.content,
+          color: event.color,
+        });
+        setSelectedColor(
+          COLORS.find((color) => color.colorCode === event.color) || COLORS[0]
+        );
+      });
+    }
+  }, [isDetail, calendar]);
 
   const selectedView = useSelector(
     (state: RootState) => state.scheduler.selectedView
@@ -196,7 +221,7 @@ export default function CalendarForm() {
         <button
           type="submit"
           className="block w-5/12 md:w-5/12 rounded-md bg-purple-400 px-3.5 py-2 md:py-3.5 text-center text-sm md:text-lg font-semibold text-white shadow-sm hover:bg-purple-500 dark:bg-indigo-700 dark:hover:bg-indigo-400">
-          save
+          {isDetail ? "Update" : "Save"}
         </button>
       </div>
     </form>
