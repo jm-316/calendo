@@ -3,6 +3,7 @@ import {
   differenceInCalendarDays,
   startOfDay,
 } from "date-fns";
+import { useNavigate } from "react-router";
 import { CalendarType } from "../../../interface";
 
 export default function MultiDayEvent({
@@ -12,6 +13,7 @@ export default function MultiDayEvent({
   events: CalendarType[];
   day: Date;
 }) {
+  const navigate = useNavigate();
   return (
     <>
       {events
@@ -36,12 +38,18 @@ export default function MultiDayEvent({
           if (currentDay >= startDate && currentDay <= endDate) {
             return (
               <div
-                key={eventIndex}
+                key={event.id}
                 className={`absolute text-left w-full text-sm`}
                 style={{
                   backgroundColor: event.color,
                   top: `${eventIndex * 30}px`,
                   height: "22px",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(
+                    event.id ? `/calendars/${event.id}` : `/calendars/new`
+                  );
                 }}>
                 {currentDay.getTime() === startDate.getTime() && event.title}
               </div>
