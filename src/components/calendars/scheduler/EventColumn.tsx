@@ -30,9 +30,12 @@ export default function EventColumn() {
               const events = findSingleDayAndHourEvents(day, hour);
               const singleDayEvents = findSingleDayEvents(day);
               const multiDayEvents = findMultiDayEvents(day);
+
               return (
                 <div
-                  onClick={() => navigate("/calendars/new")}
+                  onClick={() => {
+                    navigate("/calendars/new");
+                  }}
                   className={`flex gap-6 items-center h-14 border-l-2 ${
                     hour === 24 ? "" : "border-b-2"
                   }`}
@@ -61,7 +64,15 @@ export default function EventColumn() {
                                     ? "border-b-2"
                                     : ""
                                 }`}
-                                style={{ backgroundColor: event.color }}>
+                                style={{ backgroundColor: event.color }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  navigate(
+                                    event.id
+                                      ? `/calendars/${event.id}`
+                                      : `/calendars/new`
+                                  );
+                                }}>
                                 {event.title}
                               </div>
                             );
@@ -75,7 +86,15 @@ export default function EventColumn() {
                             <div
                               key={event.id}
                               className="h-full w-full text-center border-b-2"
-                              style={{ backgroundColor: event.color }}>
+                              style={{ backgroundColor: event.color }}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(
+                                  event.id
+                                    ? `/calendars/${event.id}`
+                                    : `/calendars/new`
+                                );
+                              }}>
                               {event.title}
                             </div>
                           ))
@@ -111,6 +130,14 @@ export default function EventColumn() {
                                     top: `${topPosition}px`,
                                     height: `${height}px`,
                                     backgroundColor: event.color,
+                                  }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(
+                                      event.id
+                                        ? `/calendars/${event.id}`
+                                        : `/calendars/new`
+                                    );
                                   }}>
                                   {hour === eventStartHour ? (
                                     event.title

@@ -4,17 +4,25 @@ import { IoTimeOutline } from "react-icons/io5";
 import { MdOutlineColorLens, MdOutlineSubtitles } from "react-icons/md";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { useState } from "react";
-import { ColorsType, NewCalendarType } from "../../../interface";
+import { useEffect, useState } from "react";
+import { CalendarType, ColorsType, NewCalendarType } from "../../../interface";
 import { COLORS } from "../../../utils/\bconstants";
 import { RootState } from "../../../store/store";
 import { useUser } from "../../../hook/useUser";
 import { useCalendars } from "../../../hook/useCalendars";
 
-export default function CalendarForm() {
+export default function CalendarForm({
+  isDetail,
+  calendar,
+  id,
+}: {
+  isDetail: boolean;
+  calendar?: CalendarType[];
+  id?: number;
+}) {
   const today = startOfToday();
   const { user, isLoading } = useUser();
-  const { newEvent } = useCalendars();
+  const { newEvent, updatedEvent } = useCalendars(id);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState<ColorsType>(COLORS[0]);
@@ -28,11 +36,37 @@ export default function CalendarForm() {
     color: COLORS[0].colorCode,
   });
 
+  useEffect(() => {
+    if (isDetail && calendar) {
+      calendar.map((event) => {
+        setEventData({
+          title: event.title,
+          startDate: event.startDate,
+          startTime: event.startTime || "",
+          endDate: event.endDate || "",
+          endTime: event.endTime || "",
+          content: event.content,
+          color: event.color,
+        });
+        setSelectedColor(
+          COLORS.find((color) => color.colorCode === event.color) || COLORS[0]
+        );
+      });
+    }
+  }, [isDetail, calendar]);
+
+  useEffect(() => {
+    setEventData((prevData) => ({
+      ...prevData,
+      color: selectedColor.colorCode,
+    }));
+  }, [selectedColor]);
+
   const selectedView = useSelector(
     (state: RootState) => state.scheduler.selectedView
   );
 
-  const handleColorSelect = (color: any) => {
+  const handleColorSelect = (color: ColorsType) => {
     setSelectedColor(color);
     setIsOpen(false);
   };
@@ -47,8 +81,9 @@ export default function CalendarForm() {
     });
   };
 
-  const handleAddEvent = () => {
-    if (user) {
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (user && !isDetail) {
       const addEvent = {
         ...eventData,
         startTime: eventData.startTime || "",
@@ -59,8 +94,28 @@ export default function CalendarForm() {
       };
 
       newEvent.mutate(addEvent);
+      navigate("/calendars");
     }
-    navigate("/calendars");
+
+    if (isDetail && id) {
+      const updateEvent = {
+        ...eventData,
+        startTime: eventData.startTime || "",
+        endTime: eventData.endTime || "",
+        endDate: eventData.endDate || "",
+        color: selectedColor.colorCode,
+        id,
+      };
+
+      updatedEvent.mutate(updateEvent, {
+        onSuccess: () => {
+          navigate("/calendars");
+        },
+        onError: (error) => {
+          console.error("Update failed:", error);
+        },
+      });
+    }
   };
 
   if (isLoading) {
@@ -69,7 +124,7 @@ export default function CalendarForm() {
 
   return (
     <form
-      onSubmit={handleAddEvent}
+      onSubmit={(e) => handleSubmit(e)}
       className="border-2 mx-auto rounded-lg mt-11 md:mt-22 w-10/12 md:h-[calc(100vh-200px)] lg:h-[calc(100vh-600px)] p-3 flex flex-col justify-center">
       <div className="w-11/12 mx-auto flex items-center mb-3 md:mb-9 pr-3 md:w-9/12">
         <MdOutlineSubtitles className="text-2xl dark:text-white" />
@@ -196,7 +251,7 @@ export default function CalendarForm() {
         <button
           type="submit"
           className="block w-5/12 md:w-5/12 rounded-md bg-purple-400 px-3.5 py-2 md:py-3.5 text-center text-sm md:text-lg font-semibold text-white shadow-sm hover:bg-purple-500 dark:bg-indigo-700 dark:hover:bg-indigo-400">
-          save
+          {isDetail ? "Update" : "Save"}
         </button>
       </div>
     </form>

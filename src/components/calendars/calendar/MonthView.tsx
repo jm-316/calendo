@@ -38,10 +38,16 @@ export default function MonthView() {
           return calendarDay >= startDate && calendarDay <= endDate;
         });
 
+        const handleClick = () => {
+          if (!singleDayEvents?.length || !multiDayEvents?.length) {
+            navigate("/calendars/new");
+          }
+        };
+
         return (
           <div
             key={`date${i}`}
-            onClick={() => navigate("/calendars/new")}
+            onClick={handleClick}
             className={`flex flex-col items-start justify-start h-16 border lg:h-32 relative dark:bg-gray-200 dark:border-gray-500 dark:text-black`}>
             <div
               className={`flex flex-col items-center justify-center w-8 h-8 mx-auto py-2 ${

@@ -1,9 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "./useUser";
 import { CalendarType } from "../interface";
-import { addEvent, getCalendars } from "../services/apiCalendar";
+import {
+  addEvent,
+  getCalendar,
+  getCalendars,
+  updateCalendar,
+} from "../services/apiCalendar";
 
-export function useCalendars() {
+export function useCalendars(calendarId?: number) {
   const { user } = useUser();
 
   const queryClient = useQueryClient();
@@ -13,6 +18,15 @@ export function useCalendars() {
     queryFn: () => {
       return getCalendars(user?.id as string);
     },
+    enabled: !!user?.id,
+  });
+
+  const calendarQuery = useQuery({
+    queryKey: ["calendars", calendarId],
+    queryFn: () => {
+      return getCalendar(calendarId as number);
+    },
+    enabled: !!calendarId,
   });
 
   const newEvent = useMutation({
@@ -34,5 +48,29 @@ export function useCalendars() {
     },
   });
 
-  return { calendars: calendarsQuery.data, newEvent };
+  const updatedEvent = useMutation({
+    mutationFn: (event: {
+      id: number;
+      title: string;
+      startDate: string;
+      endDate?: string;
+      startTime?: string;
+      endTime?: string;
+      color: string;
+      content: string;
+    }) => updateCalendar(event),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["calendars"] });
+    },
+    onError: (error) => {
+      console.error("Update failed:", error);
+    },
+  });
+
+  return {
+    calendars: calendarsQuery.data,
+    calendar: calendarQuery.data,
+    newEvent,
+    updatedEvent,
+  };
 }
