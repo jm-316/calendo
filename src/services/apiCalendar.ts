@@ -90,3 +90,52 @@ export const addEvent = async ({
     return [];
   }
 };
+
+export const updateCalendar = async ({
+  id,
+  title,
+  startDate,
+  endDate,
+  startTime,
+  endTime,
+  color,
+  content,
+}: {
+  id: number;
+  title: string;
+  startDate: string;
+  endDate?: string;
+  startTime?: string;
+  endTime?: string;
+  color: string;
+  content: string;
+}): Promise<NewCalendarType[]> => {
+  try {
+    const formattedStartTime = startTime || null;
+    const formattedEndDate = endDate || null;
+    const formattedEndTime = endTime || null;
+    const { data, error } = await supabase
+      .from("calendars")
+      .update({
+        title,
+        startDate,
+        startTime: formattedStartTime,
+        endDate: formattedEndDate,
+        endTime: formattedEndTime,
+        color,
+        content,
+      })
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error(error);
+      throw new Error("Calendar를 업데이트할 수 없습니다.");
+    }
+
+    return data as NewCalendarType[];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
