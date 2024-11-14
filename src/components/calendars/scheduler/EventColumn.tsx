@@ -31,22 +31,11 @@ export default function EventColumn() {
               const singleDayEvents = findSingleDayEvents(day);
               const multiDayEvents = findMultiDayEvents(day);
 
-              const handleClick = () => {
-                if (
-                  events &&
-                  events.length === 0 &&
-                  (!singleDayEvents?.length || !multiDayEvents?.length)
-                ) {
-                  navigate("/calendars/new");
-                }
-                {
-                  navigate("/calendars/new");
-                }
-              };
-
               return (
                 <div
-                  onClick={handleClick}
+                  onClick={() => {
+                    navigate("/calendars/new");
+                  }}
                   className={`flex gap-6 items-center h-14 border-l-2 ${
                     hour === 24 ? "" : "border-b-2"
                   }`}
