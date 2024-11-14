@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useNavigate } from "react-router";
 import { CalendarType } from "../../../interface";
 
 export default function SingleDayEvent({
@@ -10,6 +11,7 @@ export default function SingleDayEvent({
   day: Date;
   multiDayEventsForDay: CalendarType[];
 }) {
+  const navigate = useNavigate();
   return (
     <>
       {events.map((event) => {
@@ -29,6 +31,12 @@ export default function SingleDayEvent({
                 backgroundColor: event.color,
                 top: `${singleEventTop}px`,
                 height: "22px",
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                navigate(
+                  event.id ? `/calendars/${event.id}` : `/calendars/new`
+                );
               }}>
               {event.title}
             </div>
