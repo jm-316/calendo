@@ -3,6 +3,7 @@ import { useUser } from "./useUser";
 import { CalendarType } from "../interface";
 import {
   addEvent,
+  deleteCalendar,
   getCalendar,
   getCalendars,
   updateCalendar,
@@ -67,10 +68,18 @@ export function useCalendars(calendarId?: number) {
     },
   });
 
+  const removeEvent = useMutation({
+    mutationFn: (id: number) => deleteCalendar(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["calendars"] });
+    },
+  });
+
   return {
     calendars: calendarsQuery.data,
     calendar: calendarQuery.data,
     newEvent,
     updatedEvent,
+    removeEvent,
   };
 }
