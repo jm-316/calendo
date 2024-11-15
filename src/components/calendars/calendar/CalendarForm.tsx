@@ -2,6 +2,7 @@ import { format, startOfToday } from "date-fns";
 import { BsTextLeft } from "react-icons/bs";
 import { IoTimeOutline } from "react-icons/io5";
 import { MdOutlineColorLens, MdOutlineSubtitles } from "react-icons/md";
+import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
@@ -22,7 +23,7 @@ export default function CalendarForm({
 }) {
   const today = startOfToday();
   const { user, isLoading } = useUser();
-  const { newEvent, updatedEvent } = useCalendars(id);
+  const { newEvent, updatedEvent, removeEvent } = useCalendars(id);
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState<ColorsType>(COLORS[0]);
@@ -118,6 +119,14 @@ export default function CalendarForm({
     }
   };
 
+  const handleDeleteEvent = (id: number) => {
+    const userConfirmed = window.confirm("삭제하시겠습니까?");
+    if (userConfirmed) {
+      removeEvent.mutate(id);
+      navigate("/calendars");
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -126,6 +135,15 @@ export default function CalendarForm({
     <form
       onSubmit={(e) => handleSubmit(e)}
       className="border-2 mx-auto rounded-lg mt-11 md:mt-22 w-10/12 md:h-[calc(100vh-200px)] lg:h-[calc(100vh-600px)] p-3 flex flex-col justify-center">
+      <div className="w-11/12 mx-auto flex items-center mb-2 pr-3 md:w-9/12 ">
+        <div className="w-full" />
+        <div className="hover:bg-gray-200 p-3 hover:rounded-full group ">
+          <RiDeleteBin6Line
+            className="text-xl dark:text-white group-hover:dark:text-black"
+            onClick={() => handleDeleteEvent(id as number)}
+          />
+        </div>
+      </div>
       <div className="w-11/12 mx-auto flex items-center mb-3 md:mb-9 pr-3 md:w-9/12">
         <MdOutlineSubtitles className="text-2xl dark:text-white" />
         <input

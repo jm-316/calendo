@@ -139,3 +139,16 @@ export const updateCalendar = async ({
     return [];
   }
 };
+
+export const deleteCalendar = async (id: number): Promise<void> => {
+  try {
+    const { error } = await supabase.from("calendars").delete().eq("id", id);
+
+    if (error) {
+      console.error(error);
+      throw new Error("Calendar를 삭제할 수 없습니다.");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
