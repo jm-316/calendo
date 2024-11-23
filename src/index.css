@@ -36,7 +36,7 @@ a {
 }
 
 .container {
-  @apply bg-neutral-300 rounded-md w-full h-screen p-6;
+  @apply bg-neutral-300 rounded-md w-full h-screen;
 }
 
 .container__content {
@@ -60,4 +60,18 @@ a {
 
 .dark .todo__input {
   @apply bg-gray-600;
+}
+
+.dark .completionRate__title {
+  fill: white;
+}
+
+.completionRate {
+  font-size: 2rem;
+  font-weight: bold;
+  fill: black;
+}
+
+.dark .completionRate {
+  fill: white;
 }
