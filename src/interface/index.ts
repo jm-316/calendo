@@ -27,3 +27,10 @@ export interface ColorsType {
   label: string;
   colorCode: string;
 }
+
+export interface CountType {
+  id: number;
+  finishMonth: string;
+  count: number;
+  userId: string;
+}

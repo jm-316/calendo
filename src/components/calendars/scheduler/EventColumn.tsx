@@ -36,7 +36,7 @@ export default function EventColumn() {
                   onClick={() => {
                     navigate("/calendars/new");
                   }}
-                  className={`flex gap-6 items-center h-14 border-l-2 ${
+                  className={`flex gap-6 items-center h-12 md:h-14 border-l-2 ${
                     hour === 24 ? "" : "border-b-2"
                   }`}
                   key={hour}>

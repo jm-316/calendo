@@ -3,7 +3,7 @@ export default function TimeColumn() {
     <div>
       {new Array(25).fill(null).map((_, index) => (
         <div
-          className="flex flex-col items-center w-14 h-14 text-xs lg:w-20"
+          className="flex flex-col items-center w-14 h-12 md:h-14 text-xs lg:w-20"
           key={index}>
           {index === 0 ? (
             <div className="mx-auto relative dark:text-white text-xs">

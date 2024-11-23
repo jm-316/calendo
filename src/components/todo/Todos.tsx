@@ -36,7 +36,7 @@ export default function Todos() {
 
   return (
     <div className="container__content">
-      <span className="text-2xl font-medium">To-do List</span>
+      <span className="text-2xl font-medium">To-Do List</span>
       <div className="h-full">
         <div
           onClick={handleAddTodo}
@@ -45,13 +45,13 @@ export default function Todos() {
           <span>add Todo</span>
         </div>
         {isShow && (
-          <div className="flex items-center space-x-3 p-4 border-gray-200">
+          <div className="flex items-center space-x-3 p-2 md:p-3 lg:p-4 border-gray-200">
             <input
               type="text"
               value={todo}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
-              className="todo__input"
+              className="todo__input w-40 md:w-48 h-8 md:h-9 lg:h-10 text-sm md:text-lg"
               placeholder="Enter your to-do item"
             />
             <input
