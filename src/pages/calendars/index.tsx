@@ -29,7 +29,7 @@ export default function CalendarsPage() {
   }
 
   return (
-    <div className="container text-center md:text-left">
+    <div className="container p-6 text-center md:text-left">
       <div className="container__content">
         <span className="text-2xl font-medium dark:text-white">Calendars</span>
         <div className="flex items-center justify-between flex-col mt-2 md:flex-row">
@@ -52,7 +52,7 @@ export default function CalendarsPage() {
             <Scheduler />
           </div>
         ) : (
-          <MonthView />
+          <MonthView isDashboard={false} />
         )}
       </div>
     </div>
