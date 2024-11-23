@@ -1,16 +1,21 @@
-import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { LuListTodo } from "react-icons/lu";
 import { TiHomeOutline } from "react-icons/ti";
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { LuListTodo } from "react-icons/lu";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import { RootState } from "../store/store";
+import { setSelectedSidebar } from "../slices/sidebarSlice";
 
 type NavType = "Dashboard" | "Calendar" | "Todo";
 
 export default function Sidebar() {
-  const [selected, setSelected] = useState<NavType>("Dashboard");
+  const selectedSidebar = useSelector(
+    (state: RootState) => state.sidebar.selectedSidebar
+  );
+  const dispatch = useDispatch();
 
   const handleSelect = (name: NavType) => {
-    setSelected(name);
+    dispatch(setSelectedSidebar(name));
   };
 
   return (
@@ -32,7 +37,7 @@ export default function Sidebar() {
               <Link
                 to="/"
                 className={`nav__list ${
-                  selected === "Dashboard" ? "select" : ""
+                  selectedSidebar === "Dashboard" ? "select" : ""
                 } `}
                 onClick={() => handleSelect("Dashboard")}>
                 <TiHomeOutline className="w-6 h-6 shrink-0" />
@@ -43,7 +48,7 @@ export default function Sidebar() {
               <Link
                 to="/calendars"
                 className={`nav__list ${
-                  selected === "Calendar" ? "select" : ""
+                  selectedSidebar === "Calendar" ? "select" : ""
                 } `}
                 onClick={() => handleSelect("Calendar")}>
                 <FaRegCalendarAlt className="w-6 h-6 shrink-0" />
@@ -53,7 +58,9 @@ export default function Sidebar() {
             <li>
               <Link
                 to="/todos"
-                className={`nav__list ${selected === "Todo" ? "select" : ""} `}
+                className={`nav__list ${
+                  selectedSidebar === "Todo" ? "select" : ""
+                } `}
                 onClick={() => handleSelect("Todo")}>
                 <LuListTodo className="w-6 h-6 shrink-0" />
                 <span className="hidden lg:block w-40">To do</span>
