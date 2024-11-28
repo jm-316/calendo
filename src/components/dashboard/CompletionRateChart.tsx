@@ -1,4 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import Loading from "../Loading";
 import { useCount } from "../../hook/useCount";
 import { useTodos } from "../../hook/useTodos";
 
@@ -9,7 +10,7 @@ export default function CompletionRateChart() {
   const { todos, isLoading: isTodosLoading } = useTodos();
 
   if (isCountLoading || isTodosLoading) {
-    return <div>Loading....</div>;
+    return <Loading />;
   }
 
   const completed = count?.count || 0;
@@ -56,7 +57,7 @@ export default function CompletionRateChart() {
               To-Do 완료율
             </tspan>
             <tspan x="50%" dy="1.5em" className="completionRate">
-              {completionRate}%
+              {Number.isNaN(Number(completionRate)) ? "0" : completionRate}%
             </tspan>
           </text>
         </PieChart>

@@ -6,6 +6,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import Loading from "../../Loading";
 import { CalendarType, ColorsType, NewCalendarType } from "../../../interface";
 import { COLORS } from "../../../utils/\bconstants";
 import { RootState } from "../../../store/store";
@@ -128,7 +129,7 @@ export default function CalendarForm({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
