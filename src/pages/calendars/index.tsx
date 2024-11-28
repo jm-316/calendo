@@ -7,6 +7,7 @@ import Scheduler from "../../components/calendars/scheduler/Scheduler";
 import DateHeader from "../../components/calendars/DateHeader";
 import DateNavigation from "../../components/calendars/DateNavigation";
 import MonthView from "../../components/calendars/calendar/MonthView";
+import Loading from "../../components/Loading";
 import { useUser } from "../../hook/useUser";
 
 export default function CalendarsPage() {
@@ -25,7 +26,7 @@ export default function CalendarsPage() {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
