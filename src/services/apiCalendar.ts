@@ -152,3 +152,26 @@ export const deleteCalendar = async (id: number): Promise<void> => {
     console.log(error);
   }
 };
+
+export const searchCalendar = async (
+  userId: string,
+  searchQuery: string
+): Promise<CalendarType[]> => {
+  try {
+    const { data, error } = await supabase
+      .from("calendars")
+      .select("*")
+      .eq("userId", userId)
+      .like("title", `%${searchQuery}%`);
+
+    if (error) {
+      console.error(error);
+      throw new Error("검색 중 오류가 발생했습니다.");
+    }
+
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
