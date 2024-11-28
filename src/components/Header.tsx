@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router";
 import { MdDarkMode } from "react-icons/md";
-import { IoIosSearch, IoMdSunny } from "react-icons/io";
+import { IoMdSunny } from "react-icons/io";
 import { useUser } from "../hook/useUser.ts";
+import SearchBar from "./search/SearchBar.tsx";
 
 interface HeaderProps {
   dark: boolean;
@@ -24,16 +25,8 @@ export default function Header({ dark, darkSetButton }: HeaderProps) {
     <header
       className={`bg-white w-full max-w-screen-2xl ${dark ? "dark" : ""}`}>
       <nav className="flex items-center justify-between py-4 mx-auto">
-        <div className="flex items-center gap-x-3 w-7/12 relative lg:flex ">
-          <div className="absolute left-2 top-[13px] ">
-            <IoIosSearch />
-          </div>
-          <input
-            className={`placeholder-opacity-0 block w-full rounded-md border-2 py-1.5 pl-7  ${
-              dark ? "dark" : ""
-            }`}
-            placeholder="search"
-          />
+        <div className="flex items-center gap-x-3 w-8/12 relative">
+          <SearchBar dark={dark} />
           <div
             onClick={darkSetButton}
             className="flex items-center justify-center">
