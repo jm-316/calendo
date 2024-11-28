@@ -4,10 +4,14 @@ import { useNavigate } from "react-router";
 import { useCalendars } from "../../../hook/useCalendars";
 import { selectCurrentDate } from "../../../slices/schedulerSlice";
 import { useCalendarEvents } from "../../../hook/useCalendarEvents";
+import { useUser } from "../../../hook/useUser";
 
 export default function EventColumn() {
   const currentDate = useSelector(selectCurrentDate);
-  const { calendars } = useCalendars();
+  const { user } = useUser();
+
+  if (!user) return null;
+  const { calendars } = useCalendars(undefined, user?.id);
   const navigate = useNavigate();
 
   const {

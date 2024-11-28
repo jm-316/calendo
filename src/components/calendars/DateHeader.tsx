@@ -2,12 +2,14 @@ import { format, getDay } from "date-fns";
 import { useSelector } from "react-redux";
 import { useCalendars } from "../../hook/useCalendars";
 import { selectCurrentDate } from "../../slices/schedulerSlice";
+import { useUser } from "../../hook/useUser";
 import { useCalendarEvents } from "../../hook/useCalendarEvents";
 import { WEEK } from "../../utils/\bconstants";
 
 export default function DateHeader() {
   const currentDate = useSelector(selectCurrentDate);
-  const { calendars } = useCalendars();
+  const { user } = useUser();
+  const { calendars } = useCalendars(undefined, user?.id);
   const { createMonth } = useCalendarEvents(calendars);
 
   return (

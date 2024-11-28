@@ -5,10 +5,12 @@ import SingleDayEvent from "./SingleDayEvent";
 import { useCalendars } from "../../../hook/useCalendars";
 import { useCalendarEvents } from "../../../hook/useCalendarEvents";
 import { WEEK } from "../../../utils/\bconstants";
+import { useUser } from "../../../hook/useUser";
 
 export default function MonthView({ isDashboard }: { isDashboard: boolean }) {
   const navigate = useNavigate();
-  const { calendars } = useCalendars();
+  const { user } = useUser();
+  const { calendars } = useCalendars(undefined, user?.id);
   const { createMonth, findSingleDayEvents, findMultiDayEvents } =
     useCalendarEvents(calendars);
 
