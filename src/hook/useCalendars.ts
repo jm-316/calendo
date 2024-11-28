@@ -1,25 +1,23 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useUser } from "./useUser";
 import { CalendarType } from "../interface";
 import {
   addEvent,
   deleteCalendar,
   getCalendar,
   getCalendars,
+  searchCalendar,
   updateCalendar,
 } from "../services/apiCalendar";
 
-export function useCalendars(calendarId?: number) {
-  const { user } = useUser();
-
+export function useCalendars(calendarId?: number, userId?: string) {
   const queryClient = useQueryClient();
 
   const calendarsQuery = useQuery<CalendarType[]>({
-    queryKey: ["calendars", user?.id],
+    queryKey: ["calendars", userId],
     queryFn: () => {
-      return getCalendars(user?.id as string);
+      return getCalendars(userId as string);
     },
-    enabled: !!user?.id,
+    enabled: !!userId,
   });
 
   const calendarQuery = useQuery({
@@ -75,11 +73,30 @@ export function useCalendars(calendarId?: number) {
     },
   });
 
+  const searchEvent = useMutation({
+    mutationFn: ({
+      userId,
+      searchQuery,
+    }: {
+      userId: string;
+      searchQuery: string;
+    }) => {
+      if (!userId) {
+        throw new Error("user의 정보가 없습니다.");
+      }
+      return searchCalendar(userId, searchQuery);
+    },
+    onError: (error) => {
+      console.error("검색 실패", error);
+    },
+  });
+
   return {
     calendars: calendarsQuery.data,
     calendar: calendarQuery.data,
     newEvent,
     updatedEvent,
     removeEvent,
+    searchEvent,
   };
 }
