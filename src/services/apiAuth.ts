@@ -15,6 +15,20 @@ export const googleLogin = async () => {
   return data;
 };
 
+export const kakaoLogin = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "kakao",
+    options: {
+      redirectTo: "https://fdtvxohucjzhicliovcl.supabase.co/auth/v1/callback",
+      queryParams: { access_type: "offline", prompt: "consent" },
+    },
+  });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+};
+
 export const logout = async () => {
   const { error } = await supabase.auth.signOut();
 

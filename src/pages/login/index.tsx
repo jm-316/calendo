@@ -1,5 +1,6 @@
 import { FcGoogle } from "react-icons/fc";
-import { googleLogin } from "../../services/apiAuth";
+import { RiKakaoTalkFill } from "react-icons/ri";
+import { googleLogin, kakaoLogin } from "../../services/apiAuth";
 
 export default function Login() {
   return (
@@ -12,13 +13,20 @@ export default function Login() {
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <div>
-          <div>
+          <div className="flex flex-col gap-6">
             <button
               type="button"
               onClick={googleLogin}
               className="flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold leading-6 text-black border-2 shadow-sm hover:bg-[#4285F4]/90 hover:text-white hover:border-[#4285F4]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
               <FcGoogle className="w-6 h-6 mr-3" />
               Login with Google
+            </button>
+            <button
+              type="button"
+              onClick={kakaoLogin}
+              className="flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold leading-6 text-black border-2 shadow-sm hover:bg-[#f4dc42]/90 hover:text-amber-800 hover:border-[##f4dc42]/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+              <RiKakaoTalkFill className="w-6 h-6 mr-3" />
+              Login with Kakao
             </button>
           </div>
         </div>
