@@ -12,6 +12,7 @@ import CalendarNewPage from "./pages/calendars/new.tsx";
 import DetailPage from "./pages/calendars/detail.tsx";
 import Login from "./pages/login/index.tsx";
 import NotFound from "./pages/notFound/index.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { persistor, store } from "./store/store.ts";
 import "./index.css";
 
@@ -21,15 +22,33 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <NotFound />,
     children: [
-      { index: true, element: <Dashboard /> },
+      {
+        index: true,
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "todos",
-        element: <TodoPage />,
+        element: (
+          <ProtectedRoute>
+            <TodoPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "calendars",
         children: [
-          { path: "/calendars", element: <Calendars /> },
+          {
+            path: "/calendars",
+            element: (
+              <ProtectedRoute>
+                <Calendars />
+              </ProtectedRoute>
+            ),
+          },
           { path: "/calendars/new", element: <CalendarNewPage /> },
           { path: "/calendars/:id", element: <DetailPage /> },
         ],
