@@ -40,7 +40,7 @@ export default function EventColumn() {
                   onClick={() => {
                     navigate("/calendars/new");
                   }}
-                  className={`flex gap-6 items-center h-12 md:h-14 border-l-2 ${
+                  className={`flex gap-6 items-center h-[50px] border-l-2 ${
                     hour === 24 ? "" : "border-b-2"
                   }`}
                   key={hour}>
@@ -116,16 +116,21 @@ export default function EventColumn() {
                                 }`
                               );
 
-                          const eventStartHour = eventStartDateTime.getHours();
-                          const eventEndHour = eventEndDateTime.getHours();
+                          const eventStartTime =
+                            eventStartDateTime.getHours() * 50 +
+                            eventStartDateTime.getMinutes();
+                          const eventEndTime =
+                            eventEndDateTime.getHours() * 50 +
+                            eventEndDateTime.getMinutes();
+
+                          const topPosition = eventStartTime - 10;
+                          const height = eventEndTime - eventStartTime;
 
                           if (format(day, "yyyy-MM-dd") === event.startDate) {
-                            if (hour >= eventStartHour && hour < eventEndHour) {
-                              const durationInHours =
-                                eventEndHour - eventStartHour;
-                              const topPosition = eventStartHour * 60 - 20;
-                              const height = durationInHours * 60 - 10;
-
+                            if (
+                              hour >= eventStartDateTime.getHours() &&
+                              hour < eventEndDateTime.getHours()
+                            ) {
                               return (
                                 <div
                                   key={event.id}
@@ -143,7 +148,7 @@ export default function EventColumn() {
                                         : `/calendars/new`
                                     );
                                   }}>
-                                  {hour === eventStartHour ? (
+                                  {hour === eventStartDateTime.getHours() ? (
                                     event.title
                                   ) : (
                                     <div>&nbsp;</div>
