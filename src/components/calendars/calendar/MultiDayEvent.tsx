@@ -34,16 +34,15 @@ export default function MultiDayEvent({
             ? startOfDay(new Date(event.endDate))
             : startDate;
           const currentDay = startOfDay(day);
-
+          const eventHeight = window.innerHeight >= 1468 ? 12 : 5;
           if (currentDay >= startDate && currentDay <= endDate) {
             return (
               <div
                 key={event.id}
-                className={`absolute text-left w-full text-sm`}
+                className={`relative text-left w-full h-2 lg:h-[22px] lg:pl-2`}
                 style={{
                   backgroundColor: event.color,
-                  top: `${eventIndex * 30}px`,
-                  height: "22px",
+                  top: `${eventIndex * eventHeight}px`,
                 }}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -51,7 +50,11 @@ export default function MultiDayEvent({
                     event.id ? `/calendars/${event.id}` : `/calendars/new`
                   );
                 }}>
-                {currentDay.getTime() === startDate.getTime() && event.title}
+                {currentDay.getTime() === startDate.getTime() && (
+                  <span className="hidden lg:block lg:text-sm ">
+                    {event.title}
+                  </span>
+                )}
               </div>
             );
           }

@@ -63,10 +63,10 @@ export default function MonthView({ isDashboard }: { isDashboard: boolean }) {
                 : "flex flex-col items-start justify-start h-16 border lg:h-32 relative dark:bg-gray-200 dark:border-gray-500 dark:text-black"
             }`}>
             <div
-              className={`flex flex-col items-center justify-center w-8 h-8 mx-auto py-2 ${
+              className={`flex flex-col items-center justify-center w-5 md:w-7 h-5 md:h-7 lg:w-8 lg:h-8 mx-auto py-2 mb-1 ${
                 today ? "bg-blue-300 text-white rounded-full" : ""
               }`}>
-              <div>{format(day, "d")}</div>
+              <div className="text-xs md:text-sm">{format(day, "d")}</div>
             </div>
             {!isDashboard && (
               <div className="relative w-full h-full">
