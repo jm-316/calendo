@@ -135,15 +135,17 @@ export default function CalendarForm({
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="border-2 mx-auto rounded-lg mt-11 md:mt-22 w-10/12 md:h-[calc(100vh-200px)] lg:h-[calc(100vh-600px)] p-3 flex flex-col justify-center">
+      className="border-2 mx-auto rounded-lg mt-11 md:mt-22 w-10/12 md:h-[calc(100vh-200px)] lg:h-[calc(100vh-300px)] p-3 flex flex-col justify-center">
       <div className="w-11/12 mx-auto flex items-center mb-2 pr-3 md:w-9/12 ">
         <div className="w-full" />
-        <div className="hover:bg-gray-200 p-3 hover:rounded-full group ">
-          <RiDeleteBin6Line
-            className="text-xl dark:text-white group-hover:dark:text-black"
-            onClick={() => handleDeleteEvent(id as number)}
-          />
-        </div>
+        {id && (
+          <div className="hover:bg-gray-200 p-3 hover:rounded-full group ">
+            <RiDeleteBin6Line
+              className="text-xl dark:text-white group-hover:dark:text-black"
+              onClick={() => handleDeleteEvent(id as number)}
+            />
+          </div>
+        )}
       </div>
       <div className="w-11/12 mx-auto flex items-center mb-3 md:mb-9 pr-3 md:w-9/12">
         <MdOutlineSubtitles className="text-2xl dark:text-white" />
