@@ -1,8 +1,10 @@
 import { IoIosSearch } from "react-icons/io";
+import { useDispatch } from "react-redux";
 import React, { useState } from "react";
 import SearchList from "./SearchList";
 import { useCalendars } from "../../hook/useCalendars";
 import { useUser } from "../../hook/useUser";
+import { setSelectedSidebar } from "../../slices/sidebarSlice";
 
 export default function SearchBar({ dark }: { dark: boolean }) {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -10,6 +12,8 @@ export default function SearchBar({ dark }: { dark: boolean }) {
 
   const { user } = useUser();
   const { searchEvent } = useCalendars(undefined, user?.id);
+
+  const dispatch = useDispatch();
 
   if (!user) return null;
 
@@ -34,6 +38,8 @@ export default function SearchBar({ dark }: { dark: boolean }) {
 
   const handleCloseSearch = () => {
     setIsKeyDown(false);
+    setSearchQuery("");
+    dispatch(setSelectedSidebar("Calendar"));
   };
 
   return (
