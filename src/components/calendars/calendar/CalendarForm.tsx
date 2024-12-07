@@ -135,33 +135,35 @@ export default function CalendarForm({
   return (
     <form
       onSubmit={(e) => handleSubmit(e)}
-      className="border-2 mx-auto rounded-lg mt-11 md:mt-22 w-10/12 md:h-[calc(100vh-200px)] lg:h-[calc(100vh-300px)] p-3 flex flex-col justify-center">
-      <div className="w-11/12 mx-auto flex items-center mb-2 pr-3 md:w-9/12 ">
+      className="border-2 mx-auto rounded-lg mt-7 md:mt-22 w-10/12 h-[calc(100vh-160px)] md:h-[calc(100vh-200px)] lg:h-[calc(100vh-250px)] p-3 flex flex-col justify-center">
+      <div className="w-11/12 md:w-9/12 mx-auto flex items-center">
         <div className="w-full" />
         {id && (
           <div className="hover:bg-gray-200 p-3 hover:rounded-full group ">
             <RiDeleteBin6Line
-              className="text-xl dark:text-white group-hover:dark:text-black"
+              className="text-sm md:text-xl dark:text-white group-hover:dark:text-black"
               onClick={() => handleDeleteEvent(id as number)}
             />
           </div>
         )}
       </div>
-      <div className="w-11/12 mx-auto flex items-center mb-3 md:mb-9 pr-3 md:w-9/12">
+      <div className="w-11/12 mx-auto flex items-center md:mb-6 lg:mb-9 md:w-9/12">
         <MdOutlineSubtitles className="text-2xl dark:text-white" />
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          required
-          value={eventData.title}
-          onChange={handleChangeEvent}
-          className="border-2 border-gray-200 w-full block ml-5 p-3 rounded-xl h-10 md:h-16"
-        />
+        <div className="p-3 w-full ml-2">
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            required
+            value={eventData.title}
+            onChange={handleChangeEvent}
+            className="w-full p-3 border-2 rounded-xl text-xs md:text-lg"
+          />
+        </div>
       </div>
-      <div className="w-11/12 mx-auto flex items-center mb-3 md:mb-9 md:w-9/12">
+      <div className="w-11/12 mx-auto flex items-center md:mb-6 lg:mb-9 md:w-9/12">
         <IoTimeOutline className="text-2xl dark:text-white" />
-        <div className="flex justify-stretch gap-4 ml-2 p-3 w-10/12 md:w-full flex-col lg:flex-row">
+        <div className="flex justify-stretch gap-4 ml-2 p-3 w-10/12 md:w-full flex-col xl:flex-row">
           <input
             type="date"
             name="startDate"
@@ -203,12 +205,12 @@ export default function CalendarForm({
           )}
         </div>
       </div>
-      <div className="w-11/12 mx-auto flex items-center md:mb-7 md:w-9/12">
+      <div className="w-11/12 mx-auto flex items-center md:w-9/12">
         <BsTextLeft className="text-2xl dark:text-white" />
         <div className="p-3 w-full ml-2">
           <textarea
-            className="w-full h-20 md:h-36 p-3 border-2 rounded-xl placeholder:text-sm placeholder:lg:text-lg"
-            minLength={10}
+            className="w-full h-20 md:h-36 p-3 border-2 rounded-xl text-xs md:text-lg placeholder:text-sm placeholder:lg:text-lg"
+            minLength={5}
             placeholder="내용을 입력해주세요."
             required
             name="content"
@@ -221,15 +223,15 @@ export default function CalendarForm({
         <MdOutlineColorLens className="text-2xl dark:text-white" />
         <div className="relative inline-block w-52 md:w-60 lg:w-72 p-3 ml-2">
           <div
-            className="flex items-center justify-between p-3 border-2 rounded-xl w-full"
+            className="flex items-center justify-between p-3 border-2 rounded-xl w-full h-10 md:h-16"
             onClick={() => setIsOpen(!isOpen)}>
             <div className="w-full flex items-center">
               <span
-                className="w-4 h-4 mr-2 rounded-full"
+                className="w-3 h-3 md:w-4 md:h-4 mr-2 rounded-full"
                 style={{ backgroundColor: selectedColor.colorCode }}
               />
-              <div className="w-10/12 md:w-full flex justify-between">
-                <span className="text-sm md:text-lg dark:text-white">
+              <div className="w-10/12 md:w-full flex justify-between items-center">
+                <span className="text-xs md:text-lg dark:text-white">
                   {selectedColor.label}
                 </span>
                 <span className="text-gray-500">
@@ -260,18 +262,18 @@ export default function CalendarForm({
           </div>
         </div>
       </div>
-      <div className="w-10/12 mt-2 md:mt-10 mx-auto flex items-center justify-around md:w-5/12">
+      <div className="w-10/12 mt-2 md:mt-5 lg:mt-10 mb-3 mx-auto flex items-center justify-around md:w-5/12">
         <button
           type="button"
           onClick={() => {
             navigate(-1);
           }}
-          className="block w-5/12 md:w-5/12 rounded-md px-2 lg:px-3.5 py-2 md:py-3.5 text-center text-sm md:text-lg font-semibold border-2 shadow-sm focus:outline-none hover:bg-indigo-500 hover:text-white  dark:bg-gray-200 dark:text-black dark:hover:bg-purple-400 dark:hover:border-purple-400  dark:hover:text-white">
+          className="block w-5/12 md:w-5/12 h-8 md:h-14 rounded-md px-2 lg:px-3.5 py-2 md:py-3.5 text-center text-xs md:text-lg font-semibold border-2 shadow-sm focus:outline-none hover:bg-indigo-500 hover:text-white  dark:bg-gray-200 dark:text-black dark:hover:bg-purple-400 dark:hover:border-purple-400  dark:hover:text-white">
           cancel
         </button>
         <button
           type="submit"
-          className="block w-5/12 md:w-5/12 rounded-md bg-purple-400 px-3.5 py-2 md:py-3.5 text-center text-sm md:text-lg font-semibold text-white shadow-sm hover:bg-purple-500 dark:bg-indigo-700 dark:hover:bg-indigo-400">
+          className="block w-5/12 md:w-5/12 h-8 md:h-14 rounded-md bg-purple-400 px-3.5 py-2 md:py-3.5 text-center text-xs md:text-lg font-semibold text-white shadow-sm hover:bg-purple-500 dark:bg-indigo-700 dark:hover:bg-indigo-400">
           {isDetail ? "Update" : "Save"}
         </button>
       </div>
