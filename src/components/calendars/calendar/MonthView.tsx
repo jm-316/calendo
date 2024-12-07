@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import MultiDayEvent from "./MultiDayEvent";
 import SingleDayEvent from "./SingleDayEvent";
@@ -6,6 +7,7 @@ import { useCalendars } from "../../../hook/useCalendars";
 import { useCalendarEvents } from "../../../hook/useCalendarEvents";
 import { WEEK } from "../../../utils/\bconstants";
 import { useUser } from "../../../hook/useUser";
+import { setSelectedSidebar } from "../../../slices/sidebarSlice";
 
 export default function MonthView({ isDashboard }: { isDashboard: boolean }) {
   const navigate = useNavigate();
@@ -13,6 +15,7 @@ export default function MonthView({ isDashboard }: { isDashboard: boolean }) {
   const { calendars } = useCalendars(undefined, user?.id);
   const { createMonth, findSingleDayEvents, findMultiDayEvents } =
     useCalendarEvents(calendars);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -50,6 +53,7 @@ export default function MonthView({ isDashboard }: { isDashboard: boolean }) {
         const handleClick = () => {
           if (!singleDayEvents?.length || !multiDayEvents?.length) {
             navigate("/calendars/new");
+            dispatch(setSelectedSidebar("Calendar"));
           }
         };
 
