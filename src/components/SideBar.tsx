@@ -63,7 +63,7 @@ export default function Sidebar() {
                 } `}
                 onClick={() => handleSelect("Todo")}>
                 <LuListTodo className="w-6 h-6 shrink-0" />
-                <span className="hidden lg:block w-40">To do</span>
+                <span className="hidden lg:block w-40">To Do</span>
               </Link>
             </li>
           </ul>
