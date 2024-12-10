@@ -15,6 +15,8 @@
 
 [Calendo 이용해보러 가기](https://mycalendo.vercel.app)
 
+<br />
+
 ## 프로젝트 기획 동기
 
 Calendo는 내가 자주 사용하는 것을 직접 만들어보자라는 아이디어에서 출발했습니다. <br />
