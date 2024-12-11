@@ -11,7 +11,7 @@
 
 # Calendo 🗓️
 
-캘린두는 To-Do 리스트와  일정 관리를 한 곳에서 쉽게 확인하고 사용할 수 있는 웹 사이트입니다. 
+Calendo는 To-Do 리스트와  일정 관리를 한 곳에서 쉽게 확인하고 사용할 수 있는 웹 사이트입니다. 
 
 [Calendo 이용해보러 가기](https://mycalendo.vercel.app)
 
