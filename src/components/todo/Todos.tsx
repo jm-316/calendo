@@ -42,7 +42,7 @@ export default function Todos() {
           onClick={handleAddTodo}
           className="mt-2 flex items-center text-purple-500">
           <IoMdCheckboxOutline className="mr-2" />
-          <span>add Todo</span>
+          <span>add ToDo</span>
         </div>
         {isShow && (
           <div className="flex items-center space-x-3 p-2 md:p-3 lg:p-4 border-gray-200">
@@ -57,7 +57,7 @@ export default function Todos() {
             <input
               type="checkbox"
               readOnly
-              className="h-6 w-6 accent-purple-500 focus:ring-purple-500 rounded border-gray-300"
+              className="h-6 w-6 md:h-4 md:w-4 lg:h-5 lg:w-5 accent-purple-500 focus:ring-purple-500 rounded border-gray-300"
             />
           </div>
         )}
@@ -65,7 +65,7 @@ export default function Todos() {
           <TodoList />
         ) : (
           <div className="border-2 text-center p-3 mt-5 rounded-md">
-            There are no tasks. Start by writing your first todo!
+            There are no tasks. Start by writing your first To-Do!
           </div>
         )}
       </div>
